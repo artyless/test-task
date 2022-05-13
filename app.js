@@ -15,23 +15,24 @@ let requiredRange1 = [null, 200]; // England, Italy, USA, France
 let requiredRange2 = [100, 350]; // Italy, USA, France
 let requiredRange3 = [200, null]; // Germany, Russia, USA, France
 
+// Фильтр по диапазону цен
 const filterByPrice = requiredRange => {
-  if (requiredRange[0] === null) {
+  if (requiredRange[0] === null) { // Если начальный диапазон не указан
     return courses.filter(course =>
       course.prices[0] <= requiredRange[1] &&
       course.prices[1] <= requiredRange[1]
     )
-  } else if (requiredRange[1] === null) {
+  } else if (requiredRange[1] === null) { // Если конечный диапазон не указан
     return courses.filter(course =>
       course.prices[0] >= requiredRange[0] &&
       course.prices[1] >= requiredRange[0]
       ||
-      course.prices[0] === null
+      course.prices[0] === null // Если минимальная цена не указана, то нам подходят все варианты
       ||
       course.prices[0] >= requiredRange[0] &&
       course.prices[1] === null
     )
-  } else {
+  } else { // Если оба диапазона указаны
     return courses.filter(course =>
       course.prices[0] >= requiredRange[0] &&
       course.prices[0] <= requiredRange[1] &&
@@ -43,14 +44,16 @@ const filterByPrice = requiredRange => {
   }
 }
 
+// Сортировка по возрастанию/убыванию минимальной цены
 const sortByPrice = (courses, method) => {
-  if (method === 'descending') {
+  if (method === 'descending') { // Сортировка по убыванию
     return courses.sort((a, b) => b.prices[0] - a.prices[0])
-  } else if (method === 'ascending') {
+  } else if (method === 'ascending') { // Сортировка по возрастанию
     return courses.sort((a, b) => a.prices[0] - b.prices[0])
   }
 }
 
+// Вывод результатов в консоль
 console.log(requiredRange1, sortByPrice(filterByPrice(requiredRange1), 'ascending'))
 console.log(requiredRange2, sortByPrice(filterByPrice(requiredRange2), 'ascending'))
 console.log(requiredRange3, sortByPrice(filterByPrice(requiredRange3), 'ascending'))
